@@ -39,7 +39,7 @@ Future<dynamic> main(final context) async {
   mailer.send(email).then((result) {
     print(result);
   }).catchError((onError) {
-    print('error');
+    context.log(onError);
   });
 
   context.res.json({
