@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-// import 'package:dart_appwrite/dart_appwrite.dart';
+import 'package:dart_appwrite/dart_appwrite.dart';
 import 'package:sendgrid_mailer/sendgrid_mailer.dart';
 
 final String projectEndpoint = Platform.environment['APPWRITE_ENDPOINT']!;
@@ -12,14 +12,26 @@ final String emailAddress =
     Platform.environment['EMAIL_ADDRESS']!; // ! for testing purposes only
 
 Future<dynamic> main(final context) async {
-  // final client = Client()
-  //     .setEndpoint(projectEndpoint!)
-  //     .setProject(projectId)
-  //     .setKey(appwriteApi);
+  final client = Client()
+      .setEndpoint(projectEndpoint)
+      .setProject(projectId)
+      .setKey(appwriteApi);
+
+  final database = Databases(client);
+
+  if (context.httpMethod == 'POST') {
+    context.log(context.toString());
+    context.log(context.body.toString());
+    // print(context.toString());
+    // print(context.body.toString());
+  } else if (context.httpMethod == 'GET') {
+    context.log(context.toString());
+    context.log(context.body.toString());
+  }
 
   final mailer = Mailer(sendgridApiKey);
   final toAddress = Address(emailAddress);
-  final fromAddress = Address('admin@otoscopia.me');
+  final fromAddress = Address("laurencetroy.valdez@g.msuiit.edu.ph");
   final content =
       Content('text/plain', 'Appwrite Database successfully updated');
   final subject = 'Database Update Alert!';
