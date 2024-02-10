@@ -21,6 +21,10 @@ Future<dynamic> main(final context) async {
     });
   }
 
+  context.log('Sending email to $emailAddress');
+  context.log('Endpoint: $projectEndpoint, Project: $projectId, Key: $appwriteApi, Sendgrid Key: $sendgridApiKey');
+
+
   // final client = Client()
   //     .setEndpoint(projectEndpoint!)
   //     .setProject(projectId)
@@ -33,6 +37,8 @@ Future<dynamic> main(final context) async {
       Content('text/plain', 'Appwrite Database successfully updated');
   final subject = 'Database Update Alert!';
   final personalization = Personalization([toAddress]);
+
+  context.log('Sending email to $emailAddress, from $fromAddress, with subject $subject and content $content');
 
   final email =
       Email([personalization], fromAddress, subject, content: [content]);
