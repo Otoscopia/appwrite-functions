@@ -12,9 +12,6 @@ final String emailAddress =
     Platform.environment['EMAIL_ADDRESS']!; // ! for testing purposes only
 
 Future<dynamic> main(final context) async {
-  context.log('Sending email to $emailAddress');
-  context.log('Endpoint: $projectEndpoint, Project: $projectId, Key: $appwriteApi, Sendgrid Key: $sendgridApiKey');
-
   // final client = Client()
   //     .setEndpoint(projectEndpoint!)
   //     .setProject(projectId)
@@ -28,18 +25,18 @@ Future<dynamic> main(final context) async {
   final subject = 'Database Update Alert!';
   final personalization = Personalization([toAddress]);
 
-  context.log(
-      'Sending email to $emailAddress, from $fromAddress, with subject $subject and content $content');
-
   final email =
       Email([personalization], fromAddress, subject, content: [content]);
-  mailer.send(email).then((result) {
-    print(result);
-  }).catchError((onError) {
-    context.log(onError);
-  });
 
-  context.res.json({
-    'data': "testing emails",
-  });
+  try {
+    await mailer.send(email);
+
+    return context.res.json({
+      'data': "testing emails",
+    });
+  } catch (e) {
+    return context.res.json({
+      'error': e.toString(),
+    });
+  }
 }
