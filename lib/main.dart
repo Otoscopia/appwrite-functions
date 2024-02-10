@@ -8,6 +8,7 @@ final String? projectEndpoint = Platform.environment['APPWRITE_ENDPOINT'];
 final String? projectId = Platform.environment['APPWRITE_PROJECT_ID'];
 final String? appwriteApi = Platform.environment['APPWRITE_API_KEY'];
 final String? sendgridApiKey = Platform.environment['SENDGRID_API_KEY'];
+final String emailAddress = Platform.environment['EMAIL_ADDRESS']!; // ! for testing purposes only
 
 Future<dynamic> main(final context) async {
   if (projectEndpoint == null ||
@@ -26,7 +27,7 @@ Future<dynamic> main(final context) async {
   //     .setKey(appwriteApi);
 
   final mailer = Mailer(sendgridApiKey!);
-  final toAddress = Address('SEND TO EMAIL');
+  final toAddress = Address(emailAddress);
   final fromAddress = Address('admin@otoscopia.me');
   final content =
       Content('text/plain', 'Appwrite Database successfully updated');
