@@ -29,9 +29,9 @@ Future<dynamic> main(final context) async {
   final mailer = Mailer(sendgridAPI);
 
   final fromAddress = Address(emailAddress);
-  final content = Content(kType, kContent);
   final subject = kSubject;
 
+  List<Content> content = [];
   late final Address toAddress;
   late final Personalization personalization;
   late final Email email;
@@ -50,11 +50,15 @@ Future<dynamic> main(final context) async {
       final doctorEmail = doctorResponse.data[kEmail] as String;
       toAddress = Address(doctorEmail);
       personalization = Personalization([toAddress]);
+
+      final String name = doctorResponse.data[kName] as String;
+      final String code = doctorResponse.data[kCode] as String;
+
+      content.add(Content(kType, kContent(name, code)));
+      email = Email([personalization], fromAddress, subject, content: content);
+
+      await mailer.send(email);
     }
-
-    email = Email([personalization], fromAddress, subject, content: [content]);
-
-    await mailer.send(email);
 
     return context.res.json({
       kData: kSuccess,

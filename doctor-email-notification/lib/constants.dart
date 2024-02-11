@@ -13,16 +13,24 @@ const String kEmailAddress = "EMAIL_ADDRESS";
 
 // Constants
 const String kCollectionID = "\$collectionId";
+const String kName = "name";
+const String kCode = "code";
 const String kPatients = "patients";
 const String kDoctor = "doctor";
 const String kEmail = "email";
 const String kType = "text/plain";
-const String kContent = """
-A new patient has been added to the system and it is awaiting your review. Please login to the system to review the patient details. Thank you. 
-\n 
-\n Regards, 
-\n Otoscopia Team. 
-\n https://otoscopia.vercel.app/
+String kContent(String name, String code) => """
+Dear Doctor $name,
+
+A new patient has been added to your list with the following code: $code. Please log in to your Otoscopia account to view the patient's details and to schedule an appointment with the patient if necessary.
+
+Thank you and we look forward to welcoming you to the Otoscopia family.
+
+Sincerely,
+
+Otoscopia Team
+
+This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.
 """;
 
 const String kSubject = "New Patient has been added.";
