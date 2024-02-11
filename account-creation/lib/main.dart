@@ -29,6 +29,8 @@ Future<dynamic> main(final context) async {
 
   final databases = Databases(client);
 
+  final user = Users(client);
+
   final mailer = Mailer(sendgridAPI);
 
   final fromAddress = Address(emailAddress);
@@ -59,6 +61,12 @@ Future<dynamic> main(final context) async {
         Permission.update(Role.user(userID)),
       ],
     );
+
+    await user.updatePhone(userId: userID, number: response[kPhone] as String);
+    // await user.updateLabels(
+    // userId: '[USER_ID]',
+    // labels: [],
+    // );
 
     await databases.createDocument(
       databaseId: databaseID,
