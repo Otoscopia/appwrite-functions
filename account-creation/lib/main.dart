@@ -26,18 +26,13 @@ Future<dynamic> main(final context) async {
       .setEndpoint(projectEndpoint)
       .setProject(projectID)
       .setKey(appwriteApi);
-  context.log(projectEndpoint);
-  context.log(projectID);
-  context.log(appwriteApi);
 
   final databases = Databases(client);
 
   final user = Users(client);
 
   final mailer = Mailer(sendgridAPI);
-  context.log(sendgridAPI);
 
-  context.log(emailAddress);
   final fromAddress = Address(emailAddress);
   late final Content content;
   final subject = kSubject;
@@ -47,10 +42,9 @@ Future<dynamic> main(final context) async {
   late final Email email;
 
   try {
-    context.log(context.req.bodyRaw);
-    final response = context.req.bodyRaw as Map<String, dynamic>;
+    final response = context.req.bodyRaw;
     context.log(response);
-    final userID = response[kID] as String;
+    final userID = response[kID];
     context.log(userID);
 
     await databases.createDocument(
@@ -58,19 +52,19 @@ Future<dynamic> main(final context) async {
       collectionId: usersCollection,
       documentId: userID,
       data: {
-        kName: response[kName] as String,
-        kRole: response[kRole] as String,
-        kEmail: response[kEmail] as String,
-        kPhone: response[kPhone] as String,
-        kPublicKey: response[kPublicKey] as String,
-        kWorkAddress: response[kWorkAddress] as String,
+        kName: response[kName],
+        kRole: response[kRole],
+        kEmail: response[kEmail],
+        kPhone: response[kPhone],
+        kPublicKey: response[kPublicKey],
+        kWorkAddress: response[kWorkAddress],
       },
       permissions: [
         Permission.update(Role.user(userID)),
       ],
     );
 
-    await user.updatePhone(userId: userID, number: response[kPhone] as String);
+    await user.updatePhone(userId: userID, number: response[kPhone]);
     // await user.updateLabels(
     // userId: '[USER_ID]',
     // labels: [],
@@ -83,12 +77,12 @@ Future<dynamic> main(final context) async {
       data: {
         kIsActive: true,
         kUsers: userID,
-        kSchools: response[kSchools] as String,
+        kSchools: response[kSchools],
       },
     );
 
-    content = Content(kType, kContent(response[kName] as String, contactEmail));
-    toAddress = Address(response[kEmail] as String);
+    content = Content(kType, kContent(response[kName], contactEmail));
+    toAddress = Address(response[kEmail]);
     personalization = Personalization([toAddress]);
 
     email = Email([personalization], fromAddress, subject, content: [content]);
