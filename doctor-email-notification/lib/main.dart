@@ -38,22 +38,22 @@ Future<dynamic> main(final context) async {
 
   final collectionType = context.req.bodyRaw[kCollectionID] as String;
 
-  if (collectionType == screeningCollection) {
-    final doctorID = context.req.bodyRaw[kPatients][kDoctor] as String;
-    final doctorResponse = await db.getDocument(
-      databaseId: databaseID,
-      collectionId: screeningCollection,
-      documentId: doctorID,
-    );
-
-    final doctorEmail = doctorResponse.data[kEmail] as String;
-    toAddress = Address(doctorEmail);
-    personalization = Personalization([toAddress]);
-  }
-
-  email = Email([personalization], fromAddress, subject, content: [content]);
-
   try {
+    if (collectionType == screeningCollection) {
+      final doctorID = context.req.bodyRaw[kPatients][kDoctor] as String;
+      final doctorResponse = await db.getDocument(
+        databaseId: databaseID,
+        collectionId: screeningCollection,
+        documentId: doctorID,
+      );
+
+      final doctorEmail = doctorResponse.data[kEmail] as String;
+      toAddress = Address(doctorEmail);
+      personalization = Personalization([toAddress]);
+    }
+
+    email = Email([personalization], fromAddress, subject, content: [content]);
+
     await mailer.send(email);
 
     return context.res.json({
