@@ -22,6 +22,9 @@ final String emailAddress = Platform.environment[kEmailAddress]!;
 final String contactEmail = Platform.environment[kContactEmail]!;
 
 Future<dynamic> main(final context) async {
+  context.log(projectEndpoint);
+  context.log(projectID);
+  context.log(appwriteApi);
   final client = Client()
       .setEndpoint(projectEndpoint)
       .setProject(projectID)
@@ -31,8 +34,10 @@ Future<dynamic> main(final context) async {
 
   final user = Users(client);
 
+  context.log(sendgridAPI);
   final mailer = Mailer(sendgridAPI);
 
+  context.log(emailAddress);
   final fromAddress = Address(emailAddress);
   late final Content content;
   final subject = kSubject;
@@ -42,6 +47,7 @@ Future<dynamic> main(final context) async {
   late final Email email;
 
   try {
+    context.log(context.req.bodyRaw);
     final response = context.req.bodyRaw as Map<String, dynamic>;
     context.log(response);
     final userID = response[kID] as String;
