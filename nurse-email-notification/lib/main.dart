@@ -28,11 +28,12 @@ Future<dynamic> main(final context) async {
     final nurse = context.req.bodyRaw[kScreening][kAssignment];
     final nurseEmail = nurse[kUsers][kEmail] as String;
 
+    final name = nurse[kUsers][kName] as String;
     final code = context.req.bodyRaw[kPatients][kCode] as String;
 
     toAddress = Address(nurseEmail);
     personalization = Personalization([toAddress]);
-    content = Content(kType, kContent(code));
+    content = Content(kType, kContent(name, code));
   }
 
   email = Email([personalization], fromAddress, subject, content: [content]);
