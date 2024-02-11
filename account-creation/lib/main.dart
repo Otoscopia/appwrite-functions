@@ -22,20 +22,20 @@ final String emailAddress = Platform.environment[kEmailAddress]!;
 final String contactEmail = Platform.environment[kContactEmail]!;
 
 Future<dynamic> main(final context) async {
-  context.log(projectEndpoint);
-  context.log(projectID);
-  context.log(appwriteApi);
   final client = Client()
       .setEndpoint(projectEndpoint)
       .setProject(projectID)
       .setKey(appwriteApi);
+  context.log(projectEndpoint);
+  context.log(projectID);
+  context.log(appwriteApi);
 
   final databases = Databases(client);
 
   final user = Users(client);
 
-  context.log(sendgridAPI);
   final mailer = Mailer(sendgridAPI);
+  context.log(sendgridAPI);
 
   context.log(emailAddress);
   final fromAddress = Address(emailAddress);
