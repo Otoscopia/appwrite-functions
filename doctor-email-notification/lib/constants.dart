@@ -37,3 +37,12 @@ const String kSubject = "New Patient has been added.";
 const String kData = "data";
 const String kSuccess = "Email has been Sent Successfully.";
 const String kError = "error";
+
+// logs
+const String kSettingUpAppwriteClient = "Setting up Appwrite client...";
+const String kSettingUpAppwriteDatabase = "Setting up Appwrite database...";
+const String kSettingUpSendgridMailer = "Setting up Sendgrid mailer...";
+const String kDecodingRequestBody = "Decoding request body...";
+const String kFetchingDoctorDetails = "Fetching doctor details...";
+const String kSendingEmail = "Sending email...";
+const String kEmailSent = "Email has been sent successfully.";
