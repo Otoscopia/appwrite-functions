@@ -57,5 +57,7 @@ const String kSettingUpSendgridMailer = "Setting up Sendgrid mailer...";
 const String kDecodingRequestBody = "Decoding request body...";
 const String kCreatingUser = "Creating user...";
 const String kUpdatingUser = "Updating user...";
+const String kCreatingAssignment = "Creating assignment...";
+const String kSettingUpEmail = "Setting up email content and subject...";
 const String kSendingEmail = "Sending email...";
 const String kEmailSent = "Email has been sent successfully.";
