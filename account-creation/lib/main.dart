@@ -1,34 +1,74 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dart_appwrite/dart_appwrite.dart';
+import 'package:sendgrid_mailer/sendgrid_mailer.dart';
+import 'package:starter_template/constants.dart';
 
-// This is your Appwrite function
-// It's executed each time we get a request
+// Appwrite Client environment variables
+final String projectEndpoint = Platform.environment[kEndpoint]!;
+final String projectID = Platform.environment[kProjectID]!;
+final String appwriteApi = Platform.environment[kAppwriteAPI]!;
+
+// Appwrite Database environment variables
+final String databaseID = Platform.environment[kDatabaseID]!;
+final String usersCollection = Platform.environment[kUsersCollection]!;
+
+// Sendgrid environment variables
+final String sendgridAPI = Platform.environment[kSendgridAPI]!;
+final String emailAddress = Platform.environment[kEmailAddress]!;
+
 Future<dynamic> main(final context) async {
-// Why not try the Appwrite SDK?
-  //
-  // final client = Client()
-  //    .setEndpoint('https://cloud.appwrite.io/v1')
-  //    .setProject(Platform.environment['APPWRITE_FUNCTION_PROJECT_ID'])
-  //    .setKey(Platform.environment['APPWRITE_API_KEY']);
+  final client = Client()
+      .setEndpoint(projectEndpoint)
+      .setProject(projectID)
+      .setKey(appwriteApi);
 
-  // You can log messages to the console
-  context.log('Hello, Logs!');
+  final databases = Databases(client);
 
-  // If something goes wrong, log an error
-  context.error('Hello, Errors!');
+  final mailer = Mailer(sendgridAPI);
 
-  // The `req` object contains the request data
-  if (context.req.method == 'GET') {
-    // Send a response with the res object helpers
-    // `res.send()` dispatches a string back to the client
-    return context.res.send('Hello, World!');
+  final fromAddress = Address(emailAddress);
+  final content = Content(kType, kContent);
+  final subject = kSubject;
+
+  late final Address toAddress;
+  late final Personalization personalization;
+  late final Email email;
+
+  try {
+    // await databases.createDocument(
+    //   databaseId: '[DATABASE_ID]',
+    //   collectionId: '[COLLECTION_ID]',
+    //   documentId: ID.unique(),
+    //   data: {},
+    // );
+
+    toAddress = Address("laurencetroyv@gmail.com");
+    personalization = Personalization([toAddress]);
+
+    email = Email([personalization], fromAddress, subject, content: [content]);
+
+    // await mailer.send(email);
+
+    context.log(context.req.bodyRaw);
+    context.log(json.encode(context.req.body));
+    context.log(json.encode(context.req.headers));
+    context.log(context.req.scheme);
+    context.log(context.req.method);
+    context.log(context.req.url);
+    context.log(context.req.host);
+    context.log(context.req.port);
+    context.log(context.req.path);
+    context.log(context.req.queryString);
+    context.log(json.encode(context.req.query));
+
+    return context.res.json({
+      kData: kSuccess,
+    });
+  } catch (e) {
+    context.error("Failed to create document: $e");
+    return context.res.send("Failed to create document");
   }
-
-  // `res.json()` is a handy helper for sending JSON
-  return context.res.json({
-    'motto': 'Build like a team of hundreds_',
-    'learn': 'https://appwrite.io/docs',
-    'connect': 'https://appwrite.io/discord',
-    'getInspired': 'https://builtwith.appwrite.io',
-  });
 }
