@@ -52,15 +52,6 @@ Future<dynamic> main(final context) async {
 
     final userID = body[kID];
 
-    context.log("""
-        Name: ${body[kName]},
-        kRole: ${body[kRole]},
-        kEmail: ${body[kEmail]},
-        kPhone: ${body[kPhone]},
-        kPublicKey: ${body[kPublicKey]},
-        kWorkAddress: ${body[kWorkAddress]},
-""");
-
     context.log(kCreatingUser);
     await databases.createDocument(
       databaseId: databaseID,
@@ -85,7 +76,7 @@ Future<dynamic> main(final context) async {
     // userId: '[USER_ID]',
     // labels: [],
     // );
-    
+
     context.log(kCreatingAssignment);
     await databases.createDocument(
       databaseId: databaseID,
