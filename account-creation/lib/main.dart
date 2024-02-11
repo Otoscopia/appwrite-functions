@@ -43,7 +43,9 @@ Future<dynamic> main(final context) async {
 
   try {
     final response = context.req.bodyRaw as Map<String, dynamic>;
+    context.log(response);
     final userID = response[kID] as String;
+    context.log(userID);
 
     await databases.createDocument(
       databaseId: databaseID,
