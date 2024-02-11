@@ -48,3 +48,14 @@ const String kIsActive = "isActive";
 const String kUsers = "users";
 
 const String kError = "Failed to create document";
+
+// logs
+const String kSettingUpAppwriteClient = "Setting up Appwrite client...";
+const String kSettingUpAppwriteDatabase = "Setting up Appwrite database...";
+const String kSettingUpAppwriteUsers = "Setting up Appwrite users...";
+const String kSettingUpSendgridMailer = "Setting up Sendgrid mailer...";
+const String kDecodingRequestBody = "Decoding request body...";
+const String kCreatingUser = "Creating user...";
+const String kUpdatingUser = "Updating user...";
+const String kSendingEmail = "Sending email...";
+const String kEmailSent = "Email has been sent successfully.";
