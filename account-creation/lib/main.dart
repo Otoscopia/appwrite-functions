@@ -47,6 +47,7 @@ Future<dynamic> main(final context) async {
 
   try {
     context.log(context.req.bodyRaw);
+    context.log(context.req.bodyRaw.runtimeType);
     final userID = context.req.bodyRaw[kID];
     context.log(userID);
 
@@ -86,10 +87,10 @@ Future<dynamic> main(final context) async {
       },
     );
 
-    content = Content(kType, kContent(context.req.bodyRaw[kName], contactEmail));
+    content =
+        Content(kType, kContent(context.req.bodyRaw[kName], contactEmail));
     toAddress = Address(context.req.bodyRaw[kEmail]);
     personalization = Personalization([toAddress]);
-
 
     email = Email([personalization], fromAddress, subject, content: [content]);
 
