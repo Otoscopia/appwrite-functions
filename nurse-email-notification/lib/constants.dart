@@ -1,5 +1,5 @@
 // Appwrite Database environment variables
-const String kRemarksCollection = "Remarks_COLLECTION";
+const String kRemarksCollection = "REMARKS_COLLECTION";
 
 // Sendgrid environment variables
 const String kSendgridAPI = "SENDGRID_API_KEY";
