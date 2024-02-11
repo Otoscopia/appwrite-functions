@@ -23,19 +23,19 @@ final String emailAddress = Platform.environment[kEmailAddress]!;
 final String contactEmail = Platform.environment[kContactEmail]!;
 
 Future<dynamic> main(final context) async {
-  context.log('Setting up Appwrite client...');
+  context.log(kSettingUpAppwriteClient);
   final client = Client()
       .setEndpoint(projectEndpoint)
       .setProject(projectID)
       .setKey(appwriteApi);
 
-  context.log('Setting up Appwrite database...');
+  context.log(kSettingUpAppwriteDatabase);
   final databases = Databases(client);
 
-  context.log('Setting up Appwrite users...');
+  context.log(kSettingUpAppwriteUsers);
   final user = Users(client);
 
-  context.log('Setting up Sendgrid mailer...');
+  context.log(kSettingUpSendgridMailer);
   final mailer = Mailer(sendgridAPI);
 
   final fromAddress = Address(emailAddress);
@@ -47,13 +47,13 @@ Future<dynamic> main(final context) async {
   late final Email email;
 
   try {
-    context.log("Decoding request body...");
+    context.log(kDecodingRequestBody);
     final body = json.decode(context.req.bodyRaw);
 
     final userID = body[kID];
     context.log(userID);
 
-    context.log('Creating user...');
+    context.log(kCreatingUser);
     await databases.createDocument(
       databaseId: databaseID,
       collectionId: usersCollection,
@@ -71,7 +71,7 @@ Future<dynamic> main(final context) async {
       ],
     );
 
-    context.log('Updating user...');
+    context.log(kUpdatingUser);
     await user.updatePhone(userId: userID, number: body[kPhone]);
     // await user.updateLabels(
     // userId: '[USER_ID]',
@@ -95,9 +95,10 @@ Future<dynamic> main(final context) async {
 
     email = Email([personalization], fromAddress, subject, content: [content]);
 
-    context.log('Sending email...');
+    context.log(kSendingEmail);
     await mailer.send(email);
 
+    context.log(kEmailSent);
     return context.res.json({
       kData: kSuccess,
     });
