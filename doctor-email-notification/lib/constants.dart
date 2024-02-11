@@ -24,7 +24,7 @@ Dear Doctor $name,
 
 A new patient has been added to your list with the following code: $code. Please log in to your Otoscopia account to view the patient's details and to schedule an appointment with the patient if necessary.
 
-Thank you and we look forward to welcoming you to the Otoscopia family.
+Thank you and we look forward to the successful treatment of the patient.
 
 Sincerely,
 
