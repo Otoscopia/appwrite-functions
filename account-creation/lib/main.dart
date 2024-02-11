@@ -85,7 +85,8 @@ Future<dynamic> main(final context) async {
     // userId: '[USER_ID]',
     // labels: [],
     // );
-
+    
+    context.log(kCreatingAssignment);
     await databases.createDocument(
       databaseId: databaseID,
       collectionId: assignmentCollection,
@@ -97,6 +98,7 @@ Future<dynamic> main(final context) async {
       },
     );
 
+    context.log(kSettingUpEmail);
     content = Content(kType, kContent(body[kName], contactEmail));
     toAddress = Address(body[kEmail]);
     personalization = Personalization([toAddress]);
