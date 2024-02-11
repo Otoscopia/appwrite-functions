@@ -13,7 +13,8 @@ final String appwriteApi = Platform.environment[kAppwriteAPI]!;
 // Appwrite Database environment variables
 final String databaseID = Platform.environment[kDatabaseID]!;
 final String usersCollection = Platform.environment[kUsersCollection]!;
-final String assignmentCollection = Platform.environment[kAssignmentCollection]!;
+final String assignmentCollection =
+    Platform.environment[kAssignmentCollection]!;
 
 // Sendgrid environment variables
 final String sendgridAPI = Platform.environment[kSendgridAPI]!;
@@ -39,18 +40,20 @@ Future<dynamic> main(final context) async {
   late final Email email;
 
   try {
-    final userID = context.req.bodyRaw[kID] as String;
+    final response = context.req.bodyRaw as Map<String, dynamic>;
+    final userID = response[kID] as String;
+
     await databases.createDocument(
       databaseId: databaseID,
       collectionId: usersCollection,
       documentId: userID,
       data: {
-        kName: context.req.bodyRaw[kName],
-        kRole: context.req.bodyRaw[kRole],
-        kEmail: context.req.bodyRaw[kEmail],
-        kPhone: context.req.bodyRaw[kPhone],
-        kPublicKey: context.req.bodyRaw[kPublicKey],
-        kWorkAddress: context.req.bodyRaw[kWorkAddress],
+        kName: response[kName] as String,
+        kRole: response[kRole] as String,
+        kEmail: response[kEmail] as String,
+        kPhone: response[kPhone] as String,
+        kPublicKey: response[kPublicKey] as String,
+        kWorkAddress: response[kWorkAddress] as String,
       },
       permissions: [
         Permission.update(Role.user(userID)),
@@ -64,12 +67,12 @@ Future<dynamic> main(final context) async {
       data: {
         kIsActive: true,
         kUsers: userID,
-        kSchools: context.req.bodyRaw[kSchools],
+        kSchools: response[kSchools] as String,
       },
     );
 
-    content = Content(kType, kContent(context.req.bodyRaw[kName], contactEmail));
-    toAddress = Address(context.req.bodyRaw[kEmail]);
+    content = Content(kType, kContent(response[kName] as String, contactEmail));
+    toAddress = Address(response[kEmail] as String);
     personalization = Personalization([toAddress]);
 
     email = Email([personalization], fromAddress, subject, content: [content]);
