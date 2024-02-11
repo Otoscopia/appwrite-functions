@@ -47,11 +47,13 @@ Future<dynamic> main(final context) async {
   late final Email email;
 
   try {
-    context.log(context.req.bodyRaw);
-    context.log(context.req.bodyRaw.runtimeType);
-    context.log(json.encode(context.req.body));
-    context.log(json.encode(context.req.body.runtimeType));
-    final userID = context.req.bodyRaw[kID];
+    final body = json.encode(context.req.body);
+    context.log(json.encode(body.runtimeType));
+
+    final jsonBody = json.decode(body);
+    context.log(json.encode(jsonBody.runtimeType));
+    
+    final userID = jsonBody[kID];
     context.log(userID);
 
     context.log('Creating user...');
@@ -60,12 +62,12 @@ Future<dynamic> main(final context) async {
       collectionId: usersCollection,
       documentId: userID,
       data: {
-        kName: context.req.bodyRaw[kName],
-        kRole: context.req.bodyRaw[kRole],
-        kEmail: context.req.bodyRaw[kEmail],
-        kPhone: context.req.bodyRaw[kPhone],
-        kPublicKey: context.req.bodyRaw[kPublicKey],
-        kWorkAddress: context.req.bodyRaw[kWorkAddress],
+        kName: jsonBody[kName],
+        kRole: jsonBody[kRole],
+        kEmail: jsonBody[kEmail],
+        kPhone: jsonBody[kPhone],
+        kPublicKey: jsonBody[kPublicKey],
+        kWorkAddress: jsonBody[kWorkAddress],
       },
       permissions: [
         Permission.update(Role.user(userID)),
@@ -73,7 +75,7 @@ Future<dynamic> main(final context) async {
     );
 
     context.log('Updating user...');
-    await user.updatePhone(userId: userID, number: context.req.bodyRaw[kPhone]);
+    await user.updatePhone(userId: userID, number: jsonBody[kPhone]);
     // await user.updateLabels(
     // userId: '[USER_ID]',
     // labels: [],
@@ -86,13 +88,13 @@ Future<dynamic> main(final context) async {
       data: {
         kIsActive: true,
         kUsers: userID,
-        kSchools: context.req.bodyRaw[kSchools],
+        kSchools: jsonBody[kSchools],
       },
     );
 
     content =
-        Content(kType, kContent(context.req.bodyRaw[kName], contactEmail));
-    toAddress = Address(context.req.bodyRaw[kEmail]);
+        Content(kType, kContent(jsonBody[kName], contactEmail));
+    toAddress = Address(jsonBody[kEmail]);
     personalization = Personalization([toAddress]);
 
     email = Email([personalization], fromAddress, subject, content: [content]);
