@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dart_appwrite/dart_appwrite.dart';
@@ -19,15 +20,17 @@ final String sendgridAPI = Platform.environment[kSendgridAPI]!;
 final String emailAddress = Platform.environment[kEmailAddress]!;
 
 Future<dynamic> main(final context) async {
+  context.log(kSettingUpAppwriteClient);
   final client = Client()
       .setEndpoint(projectEndpoint)
       .setProject(projectID)
       .setKey(appwriteApi);
 
+  context.log(kSettingUpAppwriteDatabase);
   final db = Databases(client);
 
+  context.log(kSettingUpSendgridMailer);
   final mailer = Mailer(sendgridAPI);
-
   final fromAddress = Address(emailAddress);
   final subject = kSubject;
 
@@ -36,30 +39,37 @@ Future<dynamic> main(final context) async {
   late final Personalization personalization;
   late final Email email;
 
-  final collectionType = context.req.bodyRaw[kCollectionID] as String;
-
   try {
+    context.log(kDecodingRequestBody);
+    final body = json.decode(context.req.bodyRaw);
+    final collectionType = body[kCollectionID];
     if (collectionType == screeningCollection) {
-      final doctorID = context.req.bodyRaw[kPatients][kDoctor] as String;
-      final doctorResponse = await db.getDocument(
+      final doctorID = body[kPatients][kDoctor];
+
+      context.log(kFetchingDoctorDetails);
+      final response = await db.getDocument(
         databaseId: databaseID,
         collectionId: screeningCollection,
         documentId: doctorID,
       );
 
-      final doctorEmail = doctorResponse.data[kEmail] as String;
+      final doctor = response.data;
+
+      final doctorEmail = doctor[kEmail];
       toAddress = Address(doctorEmail);
       personalization = Personalization([toAddress]);
 
-      final String name = doctorResponse.data[kName] as String;
-      final String code = doctorResponse.data[kCode] as String;
+      final String name = doctor[kName];
+      final String code = doctor[kCode];
 
       content.add(Content(kType, kContent(name, code)));
       email = Email([personalization], fromAddress, subject, content: content);
 
+      context.log(kSendingEmail);
       await mailer.send(email);
     }
 
+      context.log(kEmailSent);
     return context.res.json({
       kData: kSuccess,
     });
