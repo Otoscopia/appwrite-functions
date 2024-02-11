@@ -47,60 +47,56 @@ Future<dynamic> main(final context) async {
   late final Email email;
 
   try {
+    context.log("Decoding request body...");
     final body = json.decode(context.req.bodyRaw);
-    context.log(body.runtimeType);
 
-    // final jsonBody = json.decode(body);
-    // context.log(json.encode(jsonBody.runtimeType));
-    
-    // final userID = jsonBody[kID];
-    // context.log(userID);
+    final userID = body[kID];
+    context.log(userID);
 
-    // context.log('Creating user...');
-    // await databases.createDocument(
-    //   databaseId: databaseID,
-    //   collectionId: usersCollection,
-    //   documentId: userID,
-    //   data: {
-    //     kName: jsonBody[kName],
-    //     kRole: jsonBody[kRole],
-    //     kEmail: jsonBody[kEmail],
-    //     kPhone: jsonBody[kPhone],
-    //     kPublicKey: jsonBody[kPublicKey],
-    //     kWorkAddress: jsonBody[kWorkAddress],
-    //   },
-    //   permissions: [
-    //     Permission.update(Role.user(userID)),
-    //   ],
+    context.log('Creating user...');
+    await databases.createDocument(
+      databaseId: databaseID,
+      collectionId: usersCollection,
+      documentId: userID,
+      data: {
+        kName: body[kName],
+        kRole: body[kRole],
+        kEmail: body[kEmail],
+        kPhone: body[kPhone],
+        kPublicKey: body[kPublicKey],
+        kWorkAddress: body[kWorkAddress],
+      },
+      permissions: [
+        Permission.update(Role.user(userID)),
+      ],
+    );
+
+    context.log('Updating user...');
+    await user.updatePhone(userId: userID, number: body[kPhone]);
+    // await user.updateLabels(
+    // userId: '[USER_ID]',
+    // labels: [],
     // );
 
-    // context.log('Updating user...');
-    // await user.updatePhone(userId: userID, number: jsonBody[kPhone]);
-    // // await user.updateLabels(
-    // // userId: '[USER_ID]',
-    // // labels: [],
-    // // );
+    await databases.createDocument(
+      databaseId: databaseID,
+      collectionId: assignmentCollection,
+      documentId: ID.unique(),
+      data: {
+        kIsActive: true,
+        kUsers: userID,
+        kSchools: body[kSchools],
+      },
+    );
 
-    // await databases.createDocument(
-    //   databaseId: databaseID,
-    //   collectionId: assignmentCollection,
-    //   documentId: ID.unique(),
-    //   data: {
-    //     kIsActive: true,
-    //     kUsers: userID,
-    //     kSchools: jsonBody[kSchools],
-    //   },
-    // );
+    content = Content(kType, kContent(body[kName], contactEmail));
+    toAddress = Address(body[kEmail]);
+    personalization = Personalization([toAddress]);
 
-    // content =
-    //     Content(kType, kContent(jsonBody[kName], contactEmail));
-    // toAddress = Address(jsonBody[kEmail]);
-    // personalization = Personalization([toAddress]);
+    email = Email([personalization], fromAddress, subject, content: [content]);
 
-    // email = Email([personalization], fromAddress, subject, content: [content]);
-
-    // context.log('Sending email...');
-    // await mailer.send(email);
+    context.log('Sending email...');
+    await mailer.send(email);
 
     return context.res.json({
       kData: kSuccess,
