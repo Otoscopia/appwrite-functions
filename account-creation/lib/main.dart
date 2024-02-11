@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dart_appwrite/dart_appwrite.dart';
@@ -48,6 +49,8 @@ Future<dynamic> main(final context) async {
   try {
     context.log(context.req.bodyRaw);
     context.log(context.req.bodyRaw.runtimeType);
+    context.log(json.encode(context.req.body));
+    context.log(json.encode(context.req.body.runtimeType));
     final userID = context.req.bodyRaw[kID];
     context.log(userID);
 
