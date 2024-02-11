@@ -22,15 +22,19 @@ final String emailAddress = Platform.environment[kEmailAddress]!;
 final String contactEmail = Platform.environment[kContactEmail]!;
 
 Future<dynamic> main(final context) async {
+  context.log('Setting up Appwrite client...');
   final client = Client()
       .setEndpoint(projectEndpoint)
       .setProject(projectID)
       .setKey(appwriteApi);
 
+  context.log('Setting up Appwrite database...');
   final databases = Databases(client);
 
+  context.log('Setting up Appwrite users...');
   final user = Users(client);
 
+  context.log('Setting up Sendgrid mailer...');
   final mailer = Mailer(sendgridAPI);
 
   final fromAddress = Address(emailAddress);
@@ -42,29 +46,30 @@ Future<dynamic> main(final context) async {
   late final Email email;
 
   try {
-    final response = context.req.bodyRaw;
-    context.log(response);
-    final userID = response[kID];
+    context.log(context.req.bodyRaw);
+    final userID = context.req.bodyRaw[kID];
     context.log(userID);
 
+    context.log('Creating user...');
     await databases.createDocument(
       databaseId: databaseID,
       collectionId: usersCollection,
       documentId: userID,
       data: {
-        kName: response[kName],
-        kRole: response[kRole],
-        kEmail: response[kEmail],
-        kPhone: response[kPhone],
-        kPublicKey: response[kPublicKey],
-        kWorkAddress: response[kWorkAddress],
+        kName: context.req.bodyRaw[kName],
+        kRole: context.req.bodyRaw[kRole],
+        kEmail: context.req.bodyRaw[kEmail],
+        kPhone: context.req.bodyRaw[kPhone],
+        kPublicKey: context.req.bodyRaw[kPublicKey],
+        kWorkAddress: context.req.bodyRaw[kWorkAddress],
       },
       permissions: [
         Permission.update(Role.user(userID)),
       ],
     );
 
-    await user.updatePhone(userId: userID, number: response[kPhone]);
+    context.log('Updating user...');
+    await user.updatePhone(userId: userID, number: context.req.bodyRaw[kPhone]);
     // await user.updateLabels(
     // userId: '[USER_ID]',
     // labels: [],
@@ -77,16 +82,18 @@ Future<dynamic> main(final context) async {
       data: {
         kIsActive: true,
         kUsers: userID,
-        kSchools: response[kSchools],
+        kSchools: context.req.bodyRaw[kSchools],
       },
     );
 
-    content = Content(kType, kContent(response[kName], contactEmail));
-    toAddress = Address(response[kEmail]);
+    content = Content(kType, kContent(context.req.bodyRaw[kName], contactEmail));
+    toAddress = Address(context.req.bodyRaw[kEmail]);
     personalization = Personalization([toAddress]);
+
 
     email = Email([personalization], fromAddress, subject, content: [content]);
 
+    context.log('Sending email...');
     await mailer.send(email);
 
     return context.res.json({
