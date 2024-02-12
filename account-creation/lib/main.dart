@@ -103,7 +103,9 @@ Future<dynamic> main(final context) async {
 
     context.log(kSettingUpAdminEmail);
     content = Content(kType, kAdminContent(userID, body[kRole]));
+    context.log("$userID ${body[kRole]}");
     toAddress = Address(body[emailAddress]);
+    context.log(emailAddress);
     personalization = Personalization([toAddress]);
 
     email = Email([personalization], fromAddress, subject, content: [content]);
