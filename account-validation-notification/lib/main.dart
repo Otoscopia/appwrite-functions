@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:io';
 
 // import 'package:dart_appwrite/dart_appwrite.dart';
@@ -47,9 +47,10 @@ Future<dynamic> main(final context) async {
   // late final Email email;
 
   try {
-    context.log(kDecodingRequestBody);
-    final body = json.decode(context.req.bodyRaw);
-    context.log(body);
+    // context.log(kDecodingRequestBody);
+    context.log(context.req.bodyRaw);
+    // final body = json.decode(context.req.bodyRaw);
+    // context.log(body);
 
     // final userID = body[kID];
 
