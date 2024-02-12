@@ -20,6 +20,7 @@ final String assignmentCollection =
 // Sendgrid environment variables
 final String sendgridAPI = Platform.environment[kSendgridAPI]!;
 final String emailAddress = Platform.environment[kEmailAddress]!;
+final adminEmail = Platform.environment[kAdminAddress]!;
 final String contactEmail = Platform.environment[kContactEmail]!;
 
 Future<dynamic> main(final context) async {
@@ -103,13 +104,16 @@ Future<dynamic> main(final context) async {
 
     context.log(kSettingUpAdminEmail);
     content = Content(kType, kAdminContent(userID, body[kRole]));
-    context.log("$userID ${body[kRole]}");
-    toAddress = Address(body[emailAddress]);
-    context.log(emailAddress);
+    context.log(adminEmail);
+    context.log("address");
+    toAddress = Address(body[adminEmail]);
+    context.log("personalization");
     personalization = Personalization([toAddress]);
 
+    context.log("email");
     email = Email([personalization], fromAddress, subject, content: [content]);
 
+    
     context.log(kSendingEmail);
     await mailer.send(email);
 

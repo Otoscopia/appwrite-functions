@@ -12,6 +12,7 @@ const String kAssignmentCollection = "ASSIGNMENT_COLLECTION";
 const String kSendgridAPI = "SENDGRID_API_KEY";
 const String kEmailAddress = "EMAIL_ADDRESS";
 const String kContactEmail = "CONTACT_EMAIL";
+const kAdminAddress = "ADMIN_EMAIL";
 
 // Constants
 const String kType = "text/plain";
