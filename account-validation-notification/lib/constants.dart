@@ -33,7 +33,7 @@ const String kSuccess = "Email has been Sent Successfully.";
 const String kName = "name";
 const String kEmail = "email";
 
-const String kError = "Failed to create document";
+const String kError = "User object has not been completed. The server will email the user if the user object is complete.";
 
 // logs
 const String kSettingUpSendgridMailer = "Setting up Sendgrid mailer...";

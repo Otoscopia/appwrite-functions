@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-// import 'dart:convert';
 import 'dart:io';
 
 import 'package:sendgrid_mailer/sendgrid_mailer.dart';
@@ -44,11 +43,13 @@ Future<dynamic> main(final context) async {
       await mailer.send(email);
 
       context.log(kEmailSent);
-
-      return context.res.json({
-        kData: kSuccess,
-      });
+    } else {
+      context.log();
     }
+
+    return context.res.json({
+      kData: kSuccess,
+    });
   } catch (e) {
     context.error("$kError: $e");
     return context.res.send(kError);
