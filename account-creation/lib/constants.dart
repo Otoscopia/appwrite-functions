@@ -61,6 +61,7 @@ const String kWorkAddress = "workAddress";
 const String kSchools = "schools";
 const String kIsActive = "isActive";
 const String kUsers = "users";
+const kNurse = "nurse";
 
 const String kError = "Failed to create document";
 

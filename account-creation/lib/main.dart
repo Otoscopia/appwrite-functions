@@ -78,17 +78,19 @@ Future<dynamic> main(final context) async {
     // labels: [],
     // );
 
-    context.log(kCreatingAssignment);
-    await databases.createDocument(
-      databaseId: databaseID,
-      collectionId: assignmentCollection,
-      documentId: ID.unique(),
-      data: {
-        kIsActive: true,
-        kUsers: userID,
-        kSchools: body[kSchools],
-      },
-    );
+    if (body[kRole] == kNurse) {
+      context.log(kCreatingAssignment);
+      await databases.createDocument(
+        databaseId: databaseID,
+        collectionId: assignmentCollection,
+        documentId: ID.unique(),
+        data: {
+          kIsActive: true,
+          kUsers: userID,
+          kSchools: body[kSchools],
+        },
+      );
+    }
 
     context.log(kSettingUpEmail);
     content = Content(kType, kContent(body[kName], contactEmail));
