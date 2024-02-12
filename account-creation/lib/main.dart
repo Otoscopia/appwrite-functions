@@ -39,12 +39,12 @@ Future<dynamic> main(final context) async {
   final mailer = Mailer(sendgridAPI);
 
   final fromAddress = Address(emailAddress);
-  late final Content content;
+  late Content content;
   final subject = kSubject;
 
-  late final Address toAddress;
-  late final Personalization personalization;
-  late final Email email;
+  late Address toAddress;
+  late Personalization personalization;
+  late Email email;
 
   try {
     context.log(kDecodingRequestBody);
@@ -92,6 +92,18 @@ Future<dynamic> main(final context) async {
     context.log(kSettingUpEmail);
     content = Content(kType, kContent(body[kName], contactEmail));
     toAddress = Address(body[kEmail]);
+    personalization = Personalization([toAddress]);
+
+    email = Email([personalization], fromAddress, subject, content: [content]);
+
+    context.log(kSendingEmail);
+    await mailer.send(email);
+
+    context.log(kEmailSent);
+
+    context.log(kSettingUpAdminEmail);
+    content = Content(kType, kAdminContent(userID, body[kRole]));
+    toAddress = Address(body[emailAddress]);
     personalization = Personalization([toAddress]);
 
     email = Email([personalization], fromAddress, subject, content: [content]);
