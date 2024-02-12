@@ -44,14 +44,14 @@ Future<dynamic> main(final context) async {
 
       context.log(kEmailSent);
     } else {
-      context.log();
+      context.log(kEmailFailed);
     }
 
     return context.res.json({
       kData: kSuccess,
     });
   } catch (e) {
-    context.error("$kError: $e");
-    return context.res.send(kError);
+    context.error(e.toString());
+    return context.res.send(e.toString());
   }
 }
