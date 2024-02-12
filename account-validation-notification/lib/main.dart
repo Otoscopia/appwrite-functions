@@ -1,34 +1,111 @@
 import 'dart:async';
-import 'package:dart_appwrite/dart_appwrite.dart';
+import 'dart:convert';
+import 'dart:io';
 
-// This is your Appwrite function
-// It's executed each time we get a request
+// import 'package:dart_appwrite/dart_appwrite.dart';
+// import 'package:sendgrid_mailer/sendgrid_mailer.dart';
+import 'package:starter_template/constants.dart';
+
+// Appwrite Client environment variables
+final String projectEndpoint = Platform.environment[kEndpoint]!;
+final String projectID = Platform.environment[kProjectID]!;
+final String appwriteApi = Platform.environment[kAppwriteAPI]!;
+
+// Appwrite Database environment variables
+final String databaseID = Platform.environment[kDatabaseID]!;
+final String usersCollection = Platform.environment[kUsersCollection]!;
+final String assignmentCollection =
+    Platform.environment[kAssignmentCollection]!;
+
+// Sendgrid environment variables
+final String sendgridAPI = Platform.environment[kSendgridAPI]!;
+final String emailAddress = Platform.environment[kEmailAddress]!;
+final String contactEmail = Platform.environment[kContactEmail]!;
+
 Future<dynamic> main(final context) async {
-// Why not try the Appwrite SDK?
-  //
+  // context.log(kSettingUpAppwriteClient);
   // final client = Client()
-  //    .setEndpoint('https://cloud.appwrite.io/v1')
-  //    .setProject(Platform.environment['APPWRITE_FUNCTION_PROJECT_ID'])
-  //    .setKey(Platform.environment['APPWRITE_API_KEY']);
+  //     .setEndpoint(projectEndpoint)
+  //     .setProject(projectID)
+  //     .setKey(appwriteApi);
 
-  // You can log messages to the console
-  context.log('Hello, Logs!');
+  // context.log(kSettingUpAppwriteDatabase);
+  // final databases = Databases(client);
 
-  // If something goes wrong, log an error
-  context.error('Hello, Errors!');
+  // context.log(kSettingUpAppwriteUsers);
+  // final user = Users(client);
 
-  // The `req` object contains the request data
-  if (context.req.method == 'GET') {
-    // Send a response with the res object helpers
-    // `res.send()` dispatches a string back to the client
-    return context.res.send('Hello, World!');
+  // context.log(kSettingUpSendgridMailer);
+  // final mailer = Mailer(sendgridAPI);
+
+  // final fromAddress = Address(emailAddress);
+  // late final Content content;
+  // final subject = kSubject;
+
+  // late final Address toAddress;
+  // late final Personalization personalization;
+  // late final Email email;
+
+  try {
+    context.log(kDecodingRequestBody);
+    final body = json.decode(context.req.bodyRaw);
+    context.log(body);
+
+    // final userID = body[kID];
+
+    // context.log(kCreatingUser);
+    // await databases.createDocument(
+    //   databaseId: databaseID,
+    //   collectionId: usersCollection,
+    //   documentId: userID,
+    //   data: {
+    //     kName: body[kName],
+    //     kRole: body[kRole],
+    //     kEmail: body[kEmail],
+    //     kPhone: body[kPhone],
+    //     kPublicKey: body[kPublicKey],
+    //     kWorkAddress: body[kWorkAddress],
+    //   },
+    //   permissions: [
+    //     Permission.update(Role.user(userID)),
+    //   ],
+    // );
+
+    // context.log(kUpdatingUser);
+    // await user.updatePhone(userId: userID, number: body[kPhone]);
+    // // await user.updateLabels(
+    // // userId: '[USER_ID]',
+    // // labels: [],
+    // // );
+
+    // context.log(kCreatingAssignment);
+    // await databases.createDocument(
+    //   databaseId: databaseID,
+    //   collectionId: assignmentCollection,
+    //   documentId: ID.unique(),
+    //   data: {
+    //     kIsActive: true,
+    //     kUsers: userID,
+    //     kSchools: body[kSchools],
+    //   },
+    // );
+
+    // context.log(kSettingUpEmail);
+    // content = Content(kType, kContent(body[kName], contactEmail));
+    // toAddress = Address(body[kEmail]);
+    // personalization = Personalization([toAddress]);
+
+    // email = Email([personalization], fromAddress, subject, content: [content]);
+
+    // context.log(kSendingEmail);
+    // await mailer.send(email);
+
+    // context.log(kEmailSent);
+    return context.res.json({
+      kData: kSuccess,
+    });
+  } catch (e) {
+    context.error("$kError: $e");
+    return context.res.send(kError);
   }
-
-  // `res.json()` is a handy helper for sending JSON
-  return context.res.json({
-    'motto': 'Build like a team of hundreds_',
-    'learn': 'https://appwrite.io/docs',
-    'connect': 'https://appwrite.io/discord',
-    'getInspired': 'https://builtwith.appwrite.io',
-  });
 }
