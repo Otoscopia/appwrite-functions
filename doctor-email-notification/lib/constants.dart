@@ -46,3 +46,4 @@ const String kDecodingRequestBody = "Decoding request body...";
 const String kFetchingDoctorDetails = "Fetching doctor details...";
 const String kSendingEmail = "Sending email...";
 const String kEmailSent = "Email has been sent successfully.";
+const String kSettingUpEmail = "Setting up email content and subject...";

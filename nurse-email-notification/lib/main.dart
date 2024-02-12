@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:sendgrid_mailer/sendgrid_mailer.dart';
@@ -12,6 +13,7 @@ final String sendgridAPI = Platform.environment[kSendgridAPI]!;
 final String emailAddress = Platform.environment[kEmailAddress]!;
 
 Future<dynamic> main(final context) async {
+  context.log(kSettingUpSendgridMailer);
   final mailer = Mailer(sendgridAPI);
 
   final fromAddress = Address(emailAddress);
@@ -22,24 +24,20 @@ Future<dynamic> main(final context) async {
   late final Content content;
   late final Email email;
 
-  final collectionType = context.req.bodyRaw[kCollectionID] as String;
-
-  if (collectionType == remarksCollection) {
-    final nurse = context.req.bodyRaw[kScreening][kAssignment];
-    final nurseEmail = nurse[kUsers][kEmail] as String;
-
-    final name = nurse[kUsers][kName] as String;
-    final code = context.req.bodyRaw[kPatients][kCode] as String;
-
-    toAddress = Address(nurseEmail);
-    personalization = Personalization([toAddress]);
-    content = Content(kType, kContent(name, code));
-  }
-
-  email = Email([personalization], fromAddress, subject, content: [content]);
-
   try {
+    context.log(kDecodingRequestBody);
+    final body = json.decode(context.req.bodyRaw);
+
+    context.log(kSettingUpEmail);
+    content = Content(kType, kContent(body[kName], body[kCode]));
+    toAddress = Address(body[kEmail]);
+    personalization = Personalization([toAddress]);
+
+    email = Email([personalization], fromAddress, subject, content: [content]);
+
+    context.log(kSendingEmail);
     await mailer.send(email);
+    context.log(kEmailSent);
 
     return context.res.json({
       kData: kSuccess,

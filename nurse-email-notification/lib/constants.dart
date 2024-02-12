@@ -33,3 +33,9 @@ const String kSubject = "New Patient has been added.";
 const String kData = "data";
 const String kSuccess = "Email has been Sent Successfully.";
 const String kError = "error";
+
+const String kSettingUpSendgridMailer = "Setting up Sendgrid mailer...";
+const String kDecodingRequestBody = "Decoding request body...";
+const String kSettingUpEmail = "Setting up email content and subject...";
+const String kSendingEmail = "Sending email...";
+const String kEmailSent = "Email has been sent successfully.";
