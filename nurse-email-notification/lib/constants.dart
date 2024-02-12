@@ -29,7 +29,7 @@ Otoscopia Team
 This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.
 """;
 
-const String kSubject = "New Patient has been added.";
+const String kSubject = "Patient Medical Record Has Been Modified.";
 const String kData = "data";
 const String kSuccess = "Email has been Sent Successfully.";
 const String kError = "error";
