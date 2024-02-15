@@ -15,7 +15,7 @@ const String kContactEmail = "CONTACT_EMAIL";
 const kAdminAddress = "ADMIN_EMAIL";
 
 // Constants
-const String kType = "text/plain";
+const String kType = "text/html";
 String kContent(String name, String email) => """
 Dear ${name.toUpperCase()},
 
