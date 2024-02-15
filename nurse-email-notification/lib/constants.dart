@@ -16,9 +16,9 @@ const String kName = "name";
 const String kEmail = "email";
 const String kType = "text/plain";
 String kContent(String name, String code) => """
-Dear Nurse $name,
+Dear Nurse <b>$name</b>,
 
-Your patient with the following code: $code and its medical record has been updated. Please log in to your Otoscopia account to view the patient's details along with the updated medical record. Please take necessary action if required and update the patients guardian about the status of the patient.
+Your patient with the following code: <i>$code</i> and its medical record has been <b>updated</b>. Please log in to your Otoscopia account to view the patient's details along with the updated medical record. Please take necessary action if required and update the patients guardian about the status of the patient.
 
 Thank you and we look forward to the successful treatment of the patient.
 
@@ -26,7 +26,7 @@ Sincerely,
 
 Otoscopia Team
 
-This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.
+<i><b>Disclaimer:</b> This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.</i>
 """;
 
 const String kSubject = "Patient Medical Record Has Been Modified.";

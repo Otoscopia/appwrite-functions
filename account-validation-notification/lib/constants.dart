@@ -6,7 +6,7 @@ const String kContactEmail = "CONTACT_EMAIL";
 // Constants
 const String kType = "text/plain";
 String kContent(String name) => """
-Dear ${name.toUpperCase()},
+Dear <b>$name</b>,
 
 Your Otoscopia User Profile haas been verified!
 
@@ -16,7 +16,7 @@ Sincerely,
 
 Otoscopia Team
 
-This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.
+<i><b>Disclaimer:</b> This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.</i>
 """;
 
 const String kSubject = "Otoscopia User Profile Verified";

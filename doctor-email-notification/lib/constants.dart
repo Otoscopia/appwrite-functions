@@ -20,9 +20,9 @@ const String kDoctor = "doctor";
 const String kEmail = "email";
 const String kType = "text/plain";
 String kContent(String name, String code) => """
-Dear Doctor $name,
+Dear Doctor <b>$name</b>,
 
-A new patient has been added to your list with the following code: $code. Please log in to your Otoscopia account to view the patient's details and to schedule an appointment with the patient if necessary.
+A new patient has been <b>added</b> to your list with the following code: <i>$code</i>. Please log in to your Otoscopia account to view the patient's details and to schedule an appointment with the patient if necessary.
 
 Thank you and we look forward to the successful treatment of the patient.
 
@@ -30,7 +30,7 @@ Sincerely,
 
 Otoscopia Team
 
-This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.
+<i><b>Disclaimer:</b> This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.</i>
 """;
 
 const String kSubject = "New Patient has been added.";
