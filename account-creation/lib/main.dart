@@ -86,7 +86,7 @@ Future<dynamic> main(final context) async {
         documentId: ID.unique(),
         data: {
           kIsActive: true,
-          kUsers: userID,
+          kNurse: userID,
           kSchools: body[kSchools],
         },
       );
