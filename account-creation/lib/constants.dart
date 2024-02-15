@@ -7,6 +7,7 @@ const String kAppwriteAPI = "ACCOUNT_CREATION_API";
 const String kDatabaseID = "DATABASE";
 const String kUsersCollection = "USER_COLLECTION";
 const String kAssignmentCollection = "ASSIGNMENT_COLLECTION";
+const kSchoolCollection = "SCHOOL_COLLECTION";
 
 // Sendgrid environment variables
 const String kSendgridAPI = "SENDGRID_API_KEY";
@@ -17,33 +18,45 @@ const kAdminAddress = "ADMIN_EMAIL";
 // Constants
 const String kType = "text/html";
 String kContent(String name, String email) => """
-Dear ${name.toUpperCase()},
+<html>
+  <p>Dear <b>${name.toUpperCase()}<b></p>,
 
-Thank you for creating your User Profile! You are halfway in opening your Otoscopia account with Otoscopia Team.
+  <p>Thank you for creating your User Profile! You are halfway in opening your Otoscopia account with Otoscopia Team.</p>
 
-We are excited to have you on board and we are looking forward to working with you. We will be in touch with you soon to discuss the next steps. In the meantime, if you have any questions, please feel free to reach out to us at $email.
+  <p>We are excited to have you on board and we are looking forward to working with you. We will be in touch with you soon to discuss the next steps. In the meantime, if you have any questions, please feel free to reach out to us at $email.</p>
 
-Thank you and we look forward to welcoming you to the Otoscopia family.
+  Thank you and we look forward to welcoming you to the Otoscopia family.</p>
 
-Sincerely,
+  <p>Sincerely,</p>
 
-Otoscopia Team
+  <p>Otoscopia Team</p>
 
-This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.
+  <p>
+    <i>
+      <b>Disclaimer:</b> This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.
+    </i>
+  </p>
+</html>
 """;
 
 String kAdminContent(String id, String role) => """
-Dear <b>Admin</b>,
+<html>
+<p>Dear <b>Admin</b></p>,
 
-A new account has been created with the id of $id and role of $role. Please verify the account status so that they can continue with the application.
+<p>A new account has been created with the id of <b>$id</b> and role of <b>$role</b>. Please verify the account status so that they can continue with the application.</p>
 
-Thank you.
+<p>Thank you.</p>
 
-Sincerely,
+<p>Sincerely,</p>
 
-Otoscopia Team
+<p>Otoscopia Team</p>
 
-<i><b>Disclaimer:</b> This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.</i>
+<p>
+  <i>
+    <b>Disclaimer:</b> This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.
+  </i>
+</p>
+</html>
 """;
 
 const String kSubject = "Otoscopia User Profile Created Successfully";
@@ -58,7 +71,7 @@ const String kEmail = "email";
 const String kPhone = "phone";
 const String kPublicKey = "publicKey";
 const String kWorkAddress = "workAddress";
-const String kSchools = "school";
+const String kSchool = "school";
 const String kIsActive = "isActive";
 const String kUsers = "users";
 const kNurse = "nurse";
@@ -74,6 +87,7 @@ const String kDecodingRequestBody = "Decoding request body...";
 const String kCreatingUser = "Creating user...";
 const String kUpdatingUser = "Updating user...";
 const String kCreatingAssignment = "Creating assignment...";
+const kUpdatingSchool = "Updating school data...";
 const String kSettingUpEmail = "Setting up email content and subject...";
 const kSettingUpAdminEmail = "Setting up admin email content and subject...";
 const String kSendingEmail = "Sending email...";

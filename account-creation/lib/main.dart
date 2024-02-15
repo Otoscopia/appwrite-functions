@@ -16,6 +16,7 @@ final String databaseID = Platform.environment[kDatabaseID]!;
 final String usersCollection = Platform.environment[kUsersCollection]!;
 final String assignmentCollection =
     Platform.environment[kAssignmentCollection]!;
+final String schoolCollection = Platform.environment[kSchoolCollection]!;
 
 // Sendgrid environment variables
 final String sendgridAPI = Platform.environment[kSendgridAPI]!;
@@ -87,7 +88,17 @@ Future<dynamic> main(final context) async {
         data: {
           kIsActive: true,
           kNurse: userID,
-          kSchools: body[kSchools],
+          kSchool: body[kSchool],
+        },
+      );
+
+      context.log(kUpdatingSchool);
+      await databases.updateDocument(
+        databaseId: databaseID,
+        collectionId: schoolCollection,
+        documentId: body[kSchool],
+        data: {
+          kIsActive: false,
         },
       );
     }
