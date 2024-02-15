@@ -1,11 +1,11 @@
 // Appwrite Client environment variables
 const String kEndpoint = "APPWRITE_ENDPOINT";
-const String kProjectID = "APPWRITE_PROJECT_ID";
-const String kAppwriteAPI = "APPWRITE_API_KEY";
+const String kProjectID = "APPWRITE_PROJECT";
+const String kAppwriteAPI = "ACCOUNT_CREATION_API";
 
 // Appwrite Database environment variables
-const String kDatabaseID = "DATABASE_ID";
-const String kUsersCollection = "USERS_COLLECTION";
+const String kDatabaseID = "DATABASE";
+const String kUsersCollection = "USER_COLLECTION";
 const String kAssignmentCollection = "ASSIGNMENT_COLLECTION";
 
 // Sendgrid environment variables
