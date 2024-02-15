@@ -25,20 +25,20 @@ Future<dynamic> main(final context) async {
     final body = json.decode(context.req.bodyRaw);
     context.log(body);
 
-    // context.log(kSettingUpEmail);
-    // toAddress = Address(body[kEmail]);
-    // personalization = Personalization([toAddress]);
+    context.log(kSettingUpEmail);
+    toAddress = Address(body[kPatients][kDoctor][kEmail]);
+    personalization = Personalization([toAddress]);
 
-    // final String name = body[kName];
-    // final String code = body[kCode];
+    final String name = body[kPatients][kDoctor][kName];
+    final String code = body[kPatients][kCode];
 
-    // content.add(Content(kType, kContent(name, code)));
-    // email = Email([personalization], fromAddress, subject, content: content);
+    content.add(Content(kType, kContent(name, code)));
+    email = Email([personalization], fromAddress, subject, content: content);
 
-    // context.log(kSendingEmail);
-    // await mailer.send(email);
+    context.log(kSendingEmail);
+    await mailer.send(email);
 
-    // context.log(kEmailSent);
+    context.log(kEmailSent);
     return context.res.json({
       kData: kSuccess,
     });
