@@ -4,19 +4,25 @@ const String kEmailAddress = "EMAIL_ADDRESS";
 const String kContactEmail = "CONTACT_EMAIL";
 
 // Constants
-const String kType = "text/plain";
+const String kType = "text/html";
 String kContent(String name) => """
-Dear <b>$name</b>,
+<html>
+  <p>Dear <b>$name</b>,</p>
 
-Your Otoscopia User Profile haas been verified!
+  <p>Your Otoscopia User Profile has been verified!</p>
 
-We are looking forward to working with you. You may access your account via the Web, Desktop or Mobile Application.
+  <p>We are looking forward to working with you. You may access your account via the Web, Desktop or Mobile Application.</p>
 
-Sincerely,
+  <p>Sincerely,</p>
 
-Otoscopia Team
+  <p>Otoscopia Team</p>
 
-<i><b>Disclaimer:</b> This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.</i>
+  <p>
+    <i>
+      <b>Disclaimer:</b> This communication is intended solely for the use of the addressee. It may contain confidential or legally privileged information. If you are not the intended recipient, any disclosure, copying, distribution or taking any action in reliance on this communication is strictly prohibited and may be unlawful. If you received this communication in error, please notify the sender immediately and delete this communication from your system. Otoscopia is neither liable for the proper and complete transmission of this communication nor for any delay in its receipt.
+    </i>
+  </p>
+<html>
 """;
 
 const String kSubject = "Otoscopia User Profile Verified";
@@ -33,11 +39,12 @@ const String kSuccess = "Email has been Sent Successfully.";
 const String kName = "name";
 const String kEmail = "email";
 
-const String kEmailFailed = "User object has not been completed. The server will email the user if the user object is complete.";
+const String kEmailFailed = "User is not verified or does not have the correct labels. Email will not be sent.";
 
 // logs
 const String kSettingUpSendgridMailer = "Setting up Sendgrid mailer...";
 const String kDecodingRequestBody = "Decoding request body...";
+const kValidation = "Checking if user is verified and has the correct labels...";
 const String kSettingUpEmail = "Setting up email content and subject...";
 const String kSendingEmail = "Sending email...";
 const String kEmailSent = "Email has been sent successfully.";
