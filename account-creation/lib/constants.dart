@@ -19,7 +19,7 @@ const kAdminAddress = "ADMIN_EMAIL";
 const String kType = "text/html";
 String kContent(String name, String email) => """
 <html>
-  <p>Dear <b>${name.toUpperCase()}<b></p>,
+  <p>Dear <b>$name<b>,</p>
 
   <p>Thank you for creating your User Profile! You are halfway in opening your Otoscopia account with Otoscopia Team.</p>
 
@@ -41,7 +41,7 @@ String kContent(String name, String email) => """
 
 String kAdminContent(String id, String role) => """
 <html>
-<p>Dear <b>Admin</b></p>,
+<p>Dear <b>Admin</b>,</p>
 
 <p>A new account has been created with the id of <b>$id</b> and role of <b>$role</b>. Please verify the account status so that they can continue with the application.</p>
 
