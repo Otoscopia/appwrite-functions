@@ -14,30 +14,37 @@ Future<dynamic> main(final context) async {
   final mailer = Mailer(sendgridAPI);
 
   final fromAddress = Address(emailAddress);
-  late final Content content;
+  late final List<Content> contents = [];
   final subject = kSubject;
 
   late final Address toAddress;
-  late final Personalization personalization;
+  late final List<Personalization> personalizations = [];
   late final Email email;
 
   try {
     context.log(kDecodingRequestBody);
     final body = json.decode(context.req.bodyRaw);
 
+    context.log(kValidation);
     final emailVerified = body[kEmailVerification];
+
     final phoneVerified = body[kphoneVerification];
+
     final List<String> labels = List<String>.from(body[kLabels]);
 
-    if (emailVerified && phoneVerified && labels.contains(kDoctor) ||
-        labels.contains(kNurse)) {
-      context.log(kSettingUpEmail);
-      content = Content(kType, kContent(body[kName]));
-      toAddress = Address(body[kEmail]);
-      personalization = Personalization([toAddress]);
+    final hasRole = labels.contains(kDoctor) || labels.contains(kNurse);
 
-      email =
-          Email([personalization], fromAddress, subject, content: [content]);
+    final isVerified = emailVerified && phoneVerified && hasRole;
+
+    if (isVerified) {
+      context.log(kSettingUpEmail);
+      contents.add(Content(kType, kContent(body[kName])));
+
+      toAddress = Address(body[kEmail]);
+
+      personalizations.add(Personalization([toAddress]));
+
+      email = Email(personalizations, fromAddress, subject, content: contents);
 
       context.log(kSendingEmail);
       await mailer.send(email);
