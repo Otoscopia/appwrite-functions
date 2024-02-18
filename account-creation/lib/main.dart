@@ -81,7 +81,6 @@ Future<dynamic> main(final context) async {
 
       context.log(kUpdatingSchool);
       for (final school in schools) {
-      context.log("school id: $school");
         await databases.createDocument(
           databaseId: databaseID,
           collectionId: assignmentCollection,
@@ -89,7 +88,7 @@ Future<dynamic> main(final context) async {
           data: {
             kIsActive: true,
             kNurse: userID,
-            kSchool: body[kSchool],
+            kSchool: school,
           },
         );
 
