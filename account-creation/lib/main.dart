@@ -77,12 +77,11 @@ Future<dynamic> main(final context) async {
 
     if (body[kRole] == kNurse) {
       context.log(kCreatingAssignment);
-      context.log(body.toString());
-      context.log(body[kSchool].runtimeType);
-      final schools = List<String>.from(body[kSchool]);
+      final schools = List<dynamic>.from(body[kSchool]);
 
       context.log(kUpdatingSchool);
       for (final school in schools) {
+      context.log("school id: $school");
         await databases.createDocument(
           databaseId: databaseID,
           collectionId: assignmentCollection,
