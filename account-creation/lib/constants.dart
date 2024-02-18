@@ -73,6 +73,7 @@ const String kPublicKey = "publicKey";
 const String kWorkAddress = "workAddress";
 const String kSchool = "school";
 const String kIsActive = "isActive";
+const isAssigned = "isAssigned";
 const String kUsers = "users";
 const kNurse = "nurse";
 
