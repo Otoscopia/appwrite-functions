@@ -77,6 +77,8 @@ Future<dynamic> main(final context) async {
 
     if (body[kRole] == kNurse) {
       context.log(kCreatingAssignment);
+      context.log(body.toString());
+      context.log(body[kSchool].runtimeType);
       final schools = List<String>.from(body[kSchool]);
 
       context.log(kUpdatingSchool);
