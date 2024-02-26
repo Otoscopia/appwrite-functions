@@ -74,33 +74,33 @@ Future<dynamic> main(final context) async {
 
     context.log(kUpdatingUser);
     await user.updatePhone(userId: userID, number: body[kPhone]);
-    // await user.updateLabels(
-    // userId: '[USER_ID]',
-    // labels: [],
-    // );
 
     if (body[kRole] == kNurse) {
       context.log(kCreatingAssignment);
-      await databases.createDocument(
-        databaseId: databaseID,
-        collectionId: assignmentCollection,
-        documentId: ID.unique(),
-        data: {
-          kIsActive: true,
-          kNurse: userID,
-          kSchool: body[kSchool],
-        },
-      );
+      final schools = List<dynamic>.from(body[kSchool]);
 
       context.log(kUpdatingSchool);
-      await databases.updateDocument(
-        databaseId: databaseID,
-        collectionId: schoolCollection,
-        documentId: body[kSchool],
-        data: {
-          kIsActive: false,
-        },
-      );
+      for (final school in schools) {
+        await databases.createDocument(
+          databaseId: databaseID,
+          collectionId: assignmentCollection,
+          documentId: ID.unique(),
+          data: {
+            kIsActive: true,
+            kNurse: userID,
+            kSchool: school,
+          },
+        );
+
+        await databases.updateDocument(
+          databaseId: databaseID,
+          collectionId: schoolCollection,
+          documentId: school,
+          data: {
+            isAssigned: true,
+          },
+        );
+      }
     }
 
     context.log(kSettingUpEmail);
